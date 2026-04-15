@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noosphere — Governance by Intelligence</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --bg:#ffffff;
+  --bg2:#f5f5f5;
+  --ink:#0f0f0f;
+  --red:#d42b20;
+  --muted:#888;
+  --light:#ccc;
+  --border:#e0e0e0;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:15px;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* NAV */
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.25rem 3rem;
+  border-bottom:2px solid var(--ink);
+  position:sticky;top:0;z-index:100;
+  background:var(--bg);
+}
+.logo{font-size:1.1rem;font-weight:700;letter-spacing:-0.02em;}
+.logo span{color:var(--red);}
+nav ul{list-style:none;display:flex;gap:2.5rem;align-items:center;}
+nav a{color:var(--muted);text-decoration:none;font-size:0.8rem;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;transition:color 0.15s;}
+nav a:hover{color:var(--ink);}
+.nav-cta{color:var(--red)!important;font-weight:700;}
+.nav-cta:hover{color:var(--ink)!important;}
+
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;z-index:200;}
+.burger span{width:22px;height:2px;background:var(--ink);transition:transform 0.3s,opacity 0.3s;}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.burger.open span:nth-child(2){opacity:0;}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* HERO */
+.hero{
+  padding:6rem 3rem 5rem;
+  border-bottom:1px solid var(--border);
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:3rem;
+  align-items:end;
+  max-width:1400px;margin:0 auto;
+}
+
+.hero-left{}
+
+.stage-badge{
+  font-size:0.7rem;
+  font-weight:700;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:2rem;
+  display:flex;align-items:center;gap:0.75rem;
+}
+.stage-badge::before{content:'';width:2rem;height:2px;background:var(--red);}
+
+h1{
+  font-size:clamp(4rem,9vw,9rem);
+  font-weight:700;
+  line-height:0.95;
+  letter-spacing:-0.04em;
+  margin-bottom:2rem;
+  max-width:900px;
+}
+
+h1 em{font-style:normal;color:var(--red);}
+
+.hero-sub{
+  font-size:1rem;
+  line-height:1.75;
+  color:var(--muted);
+  max-width:500px;
+  margin-bottom:2.5rem;
+}
+.hero-sub strong{color:var(--ink);font-weight:500;}
+
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;}
+
+.btn-swiss{
+  font-family:inherit;
+  font-size:0.78rem;
+  font-weight:700;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:0.75rem 1.75rem;
+  text-decoration:none;
+  display:inline-flex;align-items:center;gap:0.5rem;
+  transition:all 0.15s;
+  cursor:pointer;
+  border:none;
+}
+.btn-swiss.primary{background:var(--ink);color:white;}
+.btn-swiss.primary:hover{background:var(--red);}
+.btn-swiss.ghost{color:var(--ink);border:2px solid var(--ink);}
+.btn-swiss.ghost:hover{background:var(--ink);color:white;}
+
+.hero-right{
+  text-align:right;
+  padding-bottom:0.5rem;
+}
+.hero-right .big-stat{
+  font-size:clamp(2rem,4vw,4rem);
+  font-weight:700;
+  color:var(--red);
+  line-height:1;
+  letter-spacing:-0.03em;
+  display:block;
+  margin-bottom:0.25rem;
+}
+.hero-right .stat-label{
+  font-size:0.65rem;
+  font-weight:700;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  display:block;
+  margin-bottom:1.5rem;
+}
+.hero-right .stat-label:last-of-type{margin-bottom:0;}
+
+/* SECTIONS */
+.section{padding:6rem 3rem;max-width:1400px;margin:0 auto;border-bottom:1px solid var(--border);}
+
+.eyebrow{
+  font-size:0.65rem;
+  font-weight:700;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:0.75rem;
+}
+
+.section-h{
+  font-size:clamp(2rem,5vw,4.5rem);
+  font-weight:700;
+  line-height:1;
+  letter-spacing:-0.03em;
+  margin-bottom:4rem;
+  max-width:700px;
+}
+.section-h em{font-style:normal;color:var(--red);}
+
+/* PROBLEM — table layout */
+.problems-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  border-top:2px solid var(--ink);
+}
+.problem-card{
+  padding:2.5rem 2rem;
+  border-right:1px solid var(--border);
+  transition:background 0.15s;
+}
+.problem-card:last-child{border-right:none;}
+.problem-card:hover{background:var(--bg2);}
+.p-num{
+  font-size:4.5rem;
+  font-weight:700;
+  color:var(--light);
+  line-height:1;
+  margin-bottom:1.5rem;
+  letter-spacing:-0.05em;
+}
+.problem-card h3{font-size:0.875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.75rem;}
+.problem-card p{font-size:0.85rem;color:var(--muted);line-height:1.7;}
+
+/* POI */
+.poi-wrap{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;}
+.poi-left h2{font-size:clamp(1.8rem,3.5vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-0.03em;margin-bottom:1.5rem;}
+.poi-left h2 em{font-style:normal;color:var(--red);}
+.poi-left>p{font-size:0.875rem;color:var(--muted);line-height:1.75;margin-bottom:1.5rem;}
+
+.formula-block{
+  font-family:'Courier New',monospace;
+  font-size:0.85rem;
+  background:var(--bg2);
+  border-left:4px solid var(--red);
+  padding:1rem 1.25rem;
+  margin-bottom:0.5rem;
+  color:var(--ink);
+}
+.formula-note{font-size:0.72rem;color:var(--muted);margin-bottom:1.5rem;font-style:italic;}
+
+.criteria-list{border-top:2px solid var(--ink);}
+.criterion{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 0;
+  border-bottom:1px solid var(--border);
+  transition:background 0.15s;
+}
+.criterion:hover{background:var(--bg2);padding-left:0.5rem;padding-right:0.5rem;}
+.cr-left{display:flex;align-items:center;gap:1rem;}
+.cr-index{font-size:0.65rem;font-weight:700;color:var(--light);width:20px;text-align:right;}
+.cr-name{font-size:0.875rem;font-weight:500;}
+.cr-score{font-size:1.2rem;font-weight:700;color:var(--red);}
+.criterion.total{border-bottom:2px solid var(--ink);}
+.criterion.total .cr-name{font-weight:700;text-transform:uppercase;font-size:0.75rem;letter-spacing:0.05em;}
+.criterion.total .cr-score{font-size:1.8rem;letter-spacing:-0.03em;}
+
+/* SPHERES */
+.spheres-intro{display:grid;grid-template-columns:1fr 1fr;gap:5rem;margin-bottom:3rem;align-items:end;}
+.spheres-intro p{font-size:0.875rem;color:var(--muted);line-height:1.75;}
+.concept-notice{
+  font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);border:2px solid var(--border);
+  display:inline-block;padding:0.3rem 0.75rem;margin-bottom:1.5rem;
+}
+
+.spheres-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:2px solid var(--ink);
+}
+.sphere-card{
+  padding:2rem;
+  border-right:1px solid var(--border);
+  transition:background 0.15s;
+}
+.sphere-card:last-child{border-right:none;}
+.sphere-card:hover{background:var(--bg2);}
+.sphere-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;}
+.sphere-icon{font-size:1.1rem;}
+.sphere-tag{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
+.tag-expert{color:var(--red);}
+.tag-belonging{color:#2a6a9a;}
+.tag-open{color:#2a7a4a;}
+.tag-invite{color:#7a2a4a;}
+.sphere-name{font-size:0.875rem;font-weight:700;margin-bottom:0.3rem;letter-spacing:-0.01em;}
+.sphere-meta{font-size:0.72rem;color:var(--muted);}
+
+/* REP */
+.rep-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:3rem;border-top:2px solid var(--ink);}
+.rep-card{padding:2.5rem 2rem;border-right:1px solid var(--border);transition:background 0.15s;}
+.rep-card:last-child{border-right:none;}
+.rep-card:hover{background:var(--bg2);}
+.rep-num{font-size:5rem;font-weight:700;color:var(--light);line-height:1;margin-bottom:1.25rem;letter-spacing:-0.05em;}
+.rep-name{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;}
+.rep-desc{font-size:0.82rem;color:var(--muted);line-height:1.7;}
+
+/* TOKEN */
+.token-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:3rem;border-top:2px solid var(--ink);}
+.token-card{padding:2.5rem 2rem;border-right:1px solid var(--border);transition:background 0.15s;}
+.token-card:last-child{border-right:none;}
+.token-card:hover{background:var(--bg2);}
+.tc-glyph{font-size:2rem;display:block;margin-bottom:1.25rem;color:var(--red);}
+.tc-name{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;}
+.tc-desc{font-size:0.82rem;color:var(--muted);line-height:1.7;}
+
+/* CTA */
+.cta-wrap{
+  background:var(--ink);
+  color:white;
+  padding:6rem 3rem;
+  text-align:center;
+}
+.cta-badge{font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--red);display:block;margin-bottom:2rem;}
+.cta-wrap h2{font-size:clamp(2.5rem,6vw,5.5rem);font-weight:700;line-height:0.95;letter-spacing:-0.04em;margin-bottom:1.5rem;}
+.cta-wrap h2 em{font-style:normal;color:var(--red);}
+.cta-wrap>p{font-size:0.875rem;color:#999;max-width:480px;margin:0 auto 3rem;line-height:1.75;}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn-swiss.cta-primary{background:var(--red);color:white;}
+.btn-swiss.cta-primary:hover{background:#ff3326;}
+.btn-swiss.cta-ghost{color:white;border-color:rgba(255,255,255,0.3);}
+.btn-swiss.cta-ghost:hover{background:rgba(255,255,255,0.1);border-color:white;}
+
+footer{
+  padding:1.5rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:0.72rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
+  color:var(--muted);
+  border-top:2px solid var(--ink);
+}
+.footer-logo span{color:var(--red);}
+
+@media(max-width:768px){
+  nav{padding:1rem 1.25rem;}
+  .burger{display:flex;}
+  nav ul{
+    position:fixed;top:0;right:0;width:72vw;max-width:280px;height:100vh;
+    background:var(--bg);border-left:2px solid var(--ink);
+    flex-direction:column;gap:0;padding:5rem 2rem 2rem;
+    transform:translateX(100%);transition:transform 0.3s;z-index:150;
+  }
+  nav ul.open{transform:translateX(0);}
+  nav ul li{border-bottom:1px solid var(--border);}
+  nav a{display:block;padding:0.9rem 0;}
+  .hero{grid-template-columns:1fr;gap:2rem;padding:4rem 1.25rem 3rem;}
+  h1{font-size:clamp(3rem,12vw,5rem);}
+  .hero-right{text-align:left;}
+  .hero-actions{flex-direction:column;}
+  .btn-swiss{width:100%;justify-content:center;}
+  .section{padding:4rem 1.25rem;}
+  .problems-grid,.rep-grid,.token-grid{grid-template-columns:1fr;}
+  .problem-card,.rep-card,.token-card{border-right:none;border-bottom:1px solid var(--border);}
+  .poi-wrap{grid-template-columns:1fr;gap:3rem;}
+  .spheres-intro{grid-template-columns:1fr;gap:1.25rem;}
+  .spheres-grid{grid-template-columns:1fr;}
+  .sphere-card{border-right:none;border-bottom:1px solid var(--border);}
+  .cta-wrap{padding:4rem 1.25rem;}
+  .cta-actions{flex-direction:column;}
+  footer{flex-direction:column;gap:0.5rem;text-align:center;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">NOOS<span>PHERE</span></div>
+  <ul id="nav-menu">
+    <li><a href="#problem" class="nav-link">Problem</a></li>
+    <li><a href="#poi" class="nav-link">PoI Score</a></li>
+    <li><a href="#spheres" class="nav-link">Spheres</a></li>
+    <li><a href="#token" class="nav-link">Token</a></li>
+    <li><a href="#cta" class="nav-cta nav-link">Apply</a></li>
+  </ul>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="stage-badge">Foundation Stage — Building in Progress</div>
+    <h1>Your voice,<br>weighted<br>by <em>intelligence</em></h1>
+    <p class="hero-sub">Noosphere is the first governance protocol where vote weight reflects <strong>reasoning quality</strong> — not token holdings. Proof of Intelligence, on-chain.</p>
+    <div class="hero-actions">
+      <a href="#cta" class="btn-swiss primary">Get Early Access →</a>
+      <a href="#problem" class="btn-swiss ghost">Learn More</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <span class="big-stat">SphereCap</span>
+    <span class="stat-label">governs vote weight</span>
+    <span class="big-stat">20%</span>
+    <span class="stat-label">revenue to stakers</span>
+    <span class="big-stat">3</span>
+    <span class="stat-label">reputation layers</span>
+  </div>
+</section>
+
+<section class="section" id="problem">
+  <div class="eyebrow">The Core Problem</div>
+  <h2 class="section-h">Governance ignores <em>quality of thought</em></h2>
+  <div class="problems-grid">
+    <div class="problem-card"><div class="p-num">01</div><h3>Traditional Democracy</h3><p>One person, one vote — regardless of expertise. The nuclear physicist and the person who can't spell "nuclear" carry equal weight on energy policy.</p></div>
+    <div class="problem-card"><div class="p-num">02</div><h3>Token Governance</h3><p>Crypto DAOs give power to wallets, not minds. 1% of holders control most votes. Plutocracy doesn't become democracy by moving on-chain.</p></div>
+    <div class="problem-card"><div class="p-num">03</div><h3>The Missing Layer</h3><p>No existing system measures argument quality. Noosphere does. PoI Score — five dimensions of reasoning, evaluated by AI, validated by peers, recorded forever.</p></div>
+  </div>
+</section>
+
+<section class="section" id="poi">
+  <div class="poi-wrap">
+    <div class="poi-left">
+      <div class="eyebrow">Proof of Intelligence</div>
+      <h2>Five dimensions.<br><em>One score.</em></h2>
+      <p>PoI Score measures the quality of your reasoning. AI evaluates first. Domain experts validate. The result is immutable on-chain.</p>
+      <div class="formula-block">W = (PoI ÷ AvgPoI) × √(min(Stake, SphereCap))</div>
+      <p class="formula-note">SphereCap set by each Sphere — not by the protocol.</p>
+      <p style="font-size:0.85rem;color:var(--muted);line-height:1.75;">Intelligence amplifies your vote. Stake helps — but only up to the Sphere's cap. No wallet can buy more than 5× the minimum voice.</p>
+    </div>
+    <div class="criteria-list">
+      <div class="criterion"><div class="cr-left"><span class="cr-index">01</span><span class="cr-name">Completeness</span></div><span class="cr-score">20</span></div>
+      <div class="criterion"><div class="cr-left"><span class="cr-index">02</span><span class="cr-name">Steel-Manning</span></div><span class="cr-score">25</span></div>
+      <div class="criterion"><div class="cr-left"><span class="cr-index">03</span><span class="cr-name">Logical Consistency</span></div><span class="cr-score">20</span></div>
+      <div class="criterion"><div class="cr-left"><span class="cr-index">04</span><span class="cr-name">Epistemic Humility</span></div><span class="cr-score">15</span></div>
+      <div class="criterion"><div class="cr-left"><span class="cr-index">05</span><span class="cr-name">Epistemic Honesty</span></div><span class="cr-score">20</span></div>
+      <div class="criterion total"><div class="cr-left"><span class="cr-index"></span><span class="cr-name">Total PoI Score</span></div><span class="cr-score">100</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="spheres">
+  <div class="spheres-intro">
+    <div><div class="eyebrow">Sphere Architecture</div><h2 class="section-h" style="margin-bottom:0">Governance that knows <em>its context</em></h2></div>
+    <div><p>Spheres are domain-specific governance units. You join where you have genuine expertise or authentic experience.</p><p style="margin-top:1rem;">Each Sphere sets its own SphereCap. If unfair — participants fork. Spheres compete for intelligence, not wealth.</p></div>
+  </div>
+  <div class="concept-notice">⬡ Planned Architecture — Concept</div>
+  <div class="spheres-grid">
+    <div class="sphere-card"><div class="sphere-top"><span class="sphere-icon">🔬</span><span class="sphere-tag tag-expert">Expert</span></div><div class="sphere-name">DeFi Protocol Design</div><div class="sphere-meta">Planned · Expert access</div></div>
+    <div class="sphere-card"><div class="sphere-top"><span class="sphere-icon">🏠</span><span class="sphere-tag tag-belonging">Belonging</span></div><div class="sphere-name">Conflict Testimony: Donbas</div><div class="sphere-meta">Planned · Identity-gated</div></div>
+    <div class="sphere-card"><div class="sphere-top"><span class="sphere-icon">🌐</span><span class="sphere-tag tag-open">Open</span></div><div class="sphere-name">AI Governance</div><div class="sphere-meta">Planned · Open access</div></div>
+    <div class="sphere-card"><div class="sphere-top"><span class="sphere-icon">🌿</span><span class="sphere-tag tag-expert">Expert</span></div><div class="sphere-name">Climate Science Policy</div><div class="sphere-meta">Planned · Expert access</div></div>
+    <div class="sphere-card"><div class="sphere-top"><span class="sphere-icon">🏙</span><span class="sphere-tag tag-open">Open</span></div><div class="sphere-name">Urban Policy: Kyiv</div><div class="sphere-meta">Planned · Open access</div></div>
+    <div class="sphere-card"><div class="sphere-top"><span class="sphere-icon">⚙️</span><span class="sphere-tag tag-invite">Invite</span></div><div class="sphere-name">Noosphere Core</div><div class="sphere-meta">Active · Founding team</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="eyebrow">Reputation Architecture</div>
+  <h2 class="section-h">Three layers. <em>All public.</em></h2>
+  <div class="rep-grid">
+    <div class="rep-card"><div class="rep-num">I</div><div class="rep-name">PoI Score</div><div class="rep-desc">Quality of argumentation across five criteria. Evaluated by AI, validated by domain peers. Cannot be bought or transferred.</div></div>
+    <div class="rep-card"><div class="rep-num">II</div><div class="rep-name">Peer Review Track Record</div><div class="rep-desc">How domain experts rate your reasoning in live debates. Accumulates over time. Visible to everyone in the Sphere.</div></div>
+    <div class="rep-card"><div class="rep-num">III</div><div class="rep-name">Investment History</div><div class="rep-desc">Where you put $NOS. Who you backed before they succeeded. Foresight, permanently on-chain.</div></div>
+  </div>
+</section>
+
+<section class="section" id="token">
+  <div class="eyebrow">Token Architecture</div>
+  <h2 class="section-h">$NOS: Real yield, <em>not emissions</em></h2>
+  <div class="token-grid">
+    <div class="token-card"><span class="tc-glyph">⬡</span><div class="tc-name">PoI Points</div><div class="tc-desc">Non-transferable. Earned through quality participation. Determines vote weight. Cannot be bought.</div></div>
+    <div class="token-card"><span class="tc-glyph">🔒</span><div class="tc-name">Earned $NOS</div><div class="tc-desc">Locked token earned through governance contribution. Vests over time. Genuine stake in the protocol's success.</div></div>
+    <div class="token-card"><span class="tc-glyph">◎</span><div class="tc-name">Market $NOS</div><div class="tc-desc">Freely tradeable. Stake to earn 20% of real B2B revenue. 70% of revenue burns supply. Actual business income.</div></div>
+  </div>
+</section>
+
+<section id="cta">
+  <div class="cta-wrap">
+    <span class="cta-badge">Founding Cohort · Limited Access</span>
+    <h2>Join the minds<br>building <em>better</em><br>governance</h2>
+    <p>We're looking for co-founders, domain experts, and early adopters. Help shape the PoI scoring model, Sphere architecture, and a governance system the world actually deserves.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-swiss cta-primary">Apply for Early Access →</a>
+      <a href="#" class="btn-swiss cta-ghost">Read the Whitepaper</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>NOOS<span class="footer-logo"><span>PHERE</span></span></span>
+  <span>Foundation Stage · 2026</span>
+  <span>© 2026 Noosphere Protocol · $NOS</span>
+</footer>
+
+<script>
+const burger=document.getElementById('burger');
+const navMenu=document.getElementById('nav-menu');
+burger.addEventListener('click',()=>{burger.classList.toggle('open');navMenu.classList.toggle('open');});
+document.querySelectorAll('.nav-link').forEach(l=>l.addEventListener('click',()=>{burger.classList.remove('open');navMenu.classList.remove('open');}));
+</script>
+</body>
+</html>
